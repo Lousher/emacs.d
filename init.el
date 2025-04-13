@@ -18,8 +18,9 @@
  ;; If there is more than one, they won't work right.
  '(geiser-chez-binary "chez")
  '(package-selected-packages
-   '(company geiser-chez kotlin-mode lsp-mode magit rainbow-delimiters
-	     slime smartparens treemacs-projectile treesit-auto))
+   '(company diff-hl emmet-mode geiser-chez kotlin-mode lsp-mode magit
+	     rainbow-delimiters slime smartparens treemacs-projectile
+	     treesit-auto))
  '(smartparens-global-mode t)
  '(sp-highlight-pair-overlay t)
  '(sp-highlight-wrap-overlay t))
@@ -125,3 +126,9 @@
 (define-key hs-minor-mode-map (kbd "C-c f t") 'hs-toggle-hiding)
 (define-key hs-minor-mode-map (kbd "C-c f S") 'hs-show-all)
 (define-key hs-minor-mode-map (kbd "C-c f H") 'hs-hide-all)
+
+;; emmet mode (short code abbr)
+(require 'emmet-mode)
+
+;; diff-hl (show diff)
+(require 'diff-hl')
