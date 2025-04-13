@@ -17,22 +17,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(geiser-chez-binary "chez")
- '(package-selected-packages '(geiser-chez rainbow-delimiters slime)))
+ '(package-selected-packages
+   '(company geiser-chez kotlin-mode lsp-mode magit rainbow-delimiters
+	     slime smartparens treemacs-projectile treesit-auto))
+ '(smartparens-global-mode t)
+ '(sp-highlight-pair-overlay t)
+ '(sp-highlight-wrap-overlay t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "#E0F4FF"))))
- '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "#B7C9E2"))))
- '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "#89CFF0"))))
- '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "#00BFFF"))))
- '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "#0066CC"))))
- '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "#0F52BA"))))
- '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "#1F497D"))))
- '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "#2A3F5F"))))
- '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "#000080"))))
-)
+ )
 
 ;; Enable bracket autocomplete
 (electric-pair-mode 1)
@@ -40,3 +36,92 @@
 ;; Colorful bracket
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
+;; ido mode
+(require 'ido)
+(ido-mode t)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+
+;; Helm
+;;(helm-mode 1)
+
+;; projectile settings
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-project-search-path '("~/projects/" "~/work/" "~/playground"))
+  :config
+  ;; I typically use this keymap prefix on macOS
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  ;; On Linux, however, I usually go with another one
+  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
+  (global-set-key (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
+
+;; treesit-auto
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+;; treemacs
+(use-package treemacs
+  :ensure t
+  :config
+  (treemacs-project-follow-mode t))
+
+;; projectile setting
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-project-search-path '("~/TW/" "~/Desktop/MiracleBegin/Fun/"))
+  :config
+  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
+  (global-set-key (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
+
+;; treesit setting
+(use-package treesit
+  :mode (("\\.tsx\\'" . tsx-ts-mode)
+         ("\\.js\\'"  . typescript-ts-mode)
+         ("\\.mjs\\'" . typescript-ts-mode)
+         ("\\.mts\\'" . typescript-ts-mode)
+         ("\\.cjs\\'" . typescript-ts-mode)
+         ("\\.ts\\'"  . typescript-ts-mode)
+         ("\\.jsx\\'" . tsx-ts-mode)
+         ("\\.json\\'" .  json-ts-mode)
+         ("\\.Dockerfile\\'" . dockerfile-ts-mode)
+         ))
+
+;; lsp-mode setting
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+  (kotlin-mode-hook .lsp)
+  )
+
+;; company mode
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; projectile setting in nested repo
+(setq projectile-project-root-files-bottom-up
+      (append '(".projectile" "package.json" "pom.xml")
+              projectile-project-root-files-bottom-up))
+
+;; define behaviour like vim J
+(global-set-key (kbd "C-c v J") 'join-line)
+
+;; line number mode
+(global-display-line-numbers-mode)
+
+;; block hide and show only in prog mode
+(require 'hideshow)
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+(define-key hs-minor-mode-map (kbd "C-c f h") 'hs-hide-block)
+(define-key hs-minor-mode-map (kbd "C-c f s") 'hs-show-block)
+(define-key hs-minor-mode-map (kbd "C-c f t") 'hs-toggle-hiding)
+(define-key hs-minor-mode-map (kbd "C-c f S") 'hs-show-all)
+(define-key hs-minor-mode-map (kbd "C-c f H") 'hs-hide-all)
