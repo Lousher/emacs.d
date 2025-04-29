@@ -18,9 +18,9 @@
  ;; If there is more than one, they won't work right.
  '(geiser-chez-binary "chez")
  '(package-selected-packages
-   '(company diff-hl emmet-mode geiser-chez kotlin-mode lsp-mode magit
-	     rainbow-delimiters slime smartparens treemacs-projectile
-	     treesit-auto))
+   '(company company-coq diff-hl emmet-mode emms geiser-chez kotlin-mode
+	     lsp-mode magit proof-general rainbow-delimiters slime
+	     smartparens treemacs-projectile treesit-auto))
  '(smartparens-global-mode t)
  '(sp-highlight-pair-overlay t)
  '(sp-highlight-wrap-overlay t))
@@ -131,4 +131,12 @@
 (require 'emmet-mode)
 
 ;; diff-hl (show diff)
-(require 'diff-hl')
+(require 'diff-hl)
+(diff-hl-margin-mode)
+
+;; Org mode
+(global-set-key (kbd "C-c o l") #'org-store-link)
+(global-set-key (kbd "C-c o a") #'org-agenda)
+(global-set-key (kbd "C-c o l") #'org-capture)
+
+
