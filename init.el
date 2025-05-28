@@ -4,9 +4,9 @@
 (package-initialize)
 
 ;; Personal Customize
-(add-to-list 'load-path "/Users/song.lin/Desktop/MiracleBegin/Fun/emacs-lib")
-(require 'newline-below)
-(global-set-key (kbd "<S-return>") 'newline-below)
+;;(add-to-list 'load-path "/Users/song.lin/Desktop/MiracleBegin/Fun/emacs-lib")
+;;(require 'newline-below)
+;;(global-set-key (kbd "<S-return>") 'newline-below)
 ;;(require 'hello-world)
 
 ;; Setup SLIME
@@ -16,11 +16,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(geiser-chez-binary "chez")
+ '(geiser-chez-binary "scheme")
  '(package-selected-packages
-   '(company company-coq diff-hl emmet-mode emms geiser-chez kotlin-mode
-	     lsp-mode magit proof-general rainbow-delimiters slime
-	     smartparens treemacs-projectile treesit-auto))
+   '(company diff-hl emmet-mode geiser-chez impatient-mode projectile
+	     rainbow-delimiters slime treemacs treesit-auto))
  '(smartparens-global-mode t)
  '(sp-highlight-pair-overlay t)
  '(sp-highlight-wrap-overlay t))
@@ -77,7 +76,7 @@
 (use-package projectile
   :ensure t
   :init
-  (setq projectile-project-search-path '("~/TW/" "~/Desktop/MiracleBegin/Fun/"))
+  (setq projectile-project-search-path '("~/Fun/"))
   :config
   (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
   (global-set-key (kbd "C-c p") 'projectile-command-map)
@@ -139,4 +138,8 @@
 (global-set-key (kbd "C-c o a") #'org-agenda)
 (global-set-key (kbd "C-c o l") #'org-capture)
 
-
+;; html develop setting
+(add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
+(add-hook 'html-mode-hook 'emmet-mode)
+(add-hook 'html-mode-hook 'httpd-start)
+(add-hook 'html-mode-hook 'impatient-mode)
