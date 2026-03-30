@@ -107,13 +107,18 @@
 
 (use-package diff-hl
   :ensure t
-  :hook (prog-mode . diff-hl-mode)
+  :hook
+  ((after-init . global-diff-hl-mode)
+   (diff-hl-mode . diff-hl-margin-mode))
   :config
+  (diff-hl-flydiff-mode 1)  
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   )
 
 ;; some config
 (global-display-line-numbers-mode 1) ;cloumn
 (column-number-mode 1) ;row
-(global-hl-line-mode 1) 
+(hl-line-mode 1)
 (set-face-background 'hl-line "#333333")
+
