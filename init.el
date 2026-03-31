@@ -1,6 +1,7 @@
 ;; 1. 设置包仓库（NonGNU ELPA 包含了 geiser-chez）
 (require 'package)
-(setq package-archives '(("nongnu" . "https://elpa.nongnu.org/nongnu/")
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("gnu"   . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
@@ -43,8 +44,8 @@
  ;; If there is more than one, they won't work right.
  '(geiser-chez-binary "chez")
  '(package-selected-packages
-   '(aggressive-indent company diff-hl flycheck geiser-chez magit paredit
-		       rainbow-delimiters)))
+   '(aggressive-indent company diff-hl flycheck geiser-chez kkp magit
+		       paredit rainbow-delimiters)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -115,6 +116,22 @@
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   )
+
+(use-package kkp
+  :ensure t
+  :config
+  (global-kkp-mode 1))
+
+(use-package hideshow
+  :ensure nil
+  :hook (scheme-mode . hs-minor-mode)
+  :bind (:map hs-minor-mode-map
+         ("C-c f s" . hs-show-block)      ; 显示当前块
+         ("C-c f S" . hs-show-all)        ; 显示所有块
+         ("C-c f h" . hs-hide-block)      ; 隐藏当前块
+         ("C-c f H" . hs-hide-all)        ; 隐藏所有块
+         ("C-c f t" . hs-toggle-hiding))) ; 切换折叠/展开（可选）
+
 
 ;; some config
 (global-display-line-numbers-mode 1) ;cloumn
